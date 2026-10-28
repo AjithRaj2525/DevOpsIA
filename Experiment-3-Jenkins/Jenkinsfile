@@ -1,0 +1,40 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'Source code is available in the workspace.'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'Building the application...'
+                sh 'test -f index.html'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Testing the application...'
+                sh 'echo "Test completed successfully"'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deployment stage completed.'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed. Check the console output.'
+        }
+    }
+}
