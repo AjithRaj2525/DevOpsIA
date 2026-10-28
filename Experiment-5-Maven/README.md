@@ -192,3 +192,41 @@ A green check mark indicates that the workflow completed successfully.
 ## Result
 
 The Java project was created and built successfully using Apache Maven. Dependency management and automated build execution were demonstrated using Maven and GitHub Actions.
+
+
+## Mam code for maven 
+
+name: Java CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Build with maven
+        run: mvn clean package
+
+
+## mam code for new.java
+
+public class New {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}
