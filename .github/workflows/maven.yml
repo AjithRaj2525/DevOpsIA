@@ -22,5 +22,5 @@ jobs:
           distribution: 'temurin'
 
       - name: Build with Maven
-        working-directory: Experiment-5-Maven/maven-demo
-        run: mvn clean package
+        shell: pwsh
+        run: mvn -f Experiment-5-Maven/maven-demo/pom.xml clean package
