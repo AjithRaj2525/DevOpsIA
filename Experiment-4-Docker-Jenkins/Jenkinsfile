@@ -11,11 +11,6 @@ pipeline {
             steps {
                 git branch: 'main',
                     url: 'https://github.com/AjithRaj2525/DevOpsIA.git'
-                dir('Experiment-4-Docker-Jenkins/myapp') {
-                    script {
-                        echo 'Repository cloned successfully.'
-                    }
-                }
             }
         }
 
@@ -36,7 +31,7 @@ pipeline {
                     sh '''
                         set +x
                         echo "$DOCKER_PAT" | docker login \
-                            -u YOUR_DOCKERHUB_USERNAME --password-stdin
+                            -u ajithraj2525 --password-stdin
                     '''
                 }
             }
