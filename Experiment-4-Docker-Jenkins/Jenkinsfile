@@ -1,0 +1,61 @@
+```groovy
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_IMAGE = "ajithraj2525/myapp"
+    }
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/AjithRaj2525/DevOpsIA.git'
+                dir('Experiment-4-Docker-Jenkins/myapp') {
+                    script {
+                        echo 'Repository cloned successfully.'
+                    }
+                }
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                dir('Experiment-4-Docker-Jenkins/myapp') {
+                    sh 'docker build -t $ajithraj2525/myapp .'
+                }
+            }
+        }
+
+        stage('Login to Docker Hub') {
+            steps {
+                withCredentials([string(
+                    credentialsId: 'dockerhub-PAT',
+                    variable: 'DOCKER_PAT'
+                )]) {
+                    sh '''
+                        set +x
+                        echo "$DOCKER_PAT" | docker login \
+                            -u YOUR_DOCKERHUB_USERNAME --password-stdin
+                    '''
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                sh 'docker push $DOCKER_IMAGE:exp10'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Docker image built and pushed successfully.'
+        }
+        failure {
+            echo 'Pipeline failed. Check Console Output.'
+        }
+    }
+}
+```
